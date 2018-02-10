@@ -5,7 +5,9 @@ class LongPress extends Component {
   moved = false;
 
   static defaultProps = {
-    time: 500
+    time: 500,
+    mobileOnly: false,
+    desktopOnly: false
   };
 
   startTimeout = () => {
@@ -28,21 +30,32 @@ class LongPress extends Component {
 
   setRef = ref => (this.ref = ref);
 
+  onTouchStart = () => {
+    this.shouldShortPress = true;
+    this.moved = false;
+    this.startTimeout();
+  };
+
+  onMove = () => {
+    this.moved = true;
+  };
+
   render() {
-    const {children, disabled} = this.props;
+    const {children, disabled, mobileOnly, desktopOnly} = this.props;
 
     const props = {
       ref: this.setRef,
-      onTouchStart: () => {
-        this.shouldShortPress = true;
-        this.moved = false;
-        this.startTimeout();
-      },
-      onTouchEnd: this.cancelTimeout,
       onContextMenu: e => e.preventDefault(),
-      onTouchMove: () => {
-        this.moved = true;
-      },
+      ...(!desktopOnly && {
+        onTouchStart: this.onTouchStart,
+        onTouchEnd: this.cancelTimeout,
+        onTouchMove: this.onMove
+      }),
+      ...(!mobileOnly && {
+        onMouseDown: this.onTouchStart,
+        onMouseUp: this.cancelTimeout,
+        onMouseMove: this.onMove
+      }),
       style: {
         ...children.props.style,
         WebkitUserSelect: 'none',

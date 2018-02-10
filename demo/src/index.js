@@ -36,7 +36,7 @@ class Demo extends Component {
 
     return (
       <div>
-        <h1>react-long Demo</h1>
+        <h1 style={{textAlign: 'center'}}>react-long Demo</h1>
         <div>
           {Array.from({length: 10}).map((t, i) => (
             <LongPress
