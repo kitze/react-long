@@ -1,16 +1,21 @@
-# react-longpress
+# react-long
 
-[![Travis][build-badge]][build]
-[![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+# Demo
 
-Describe react-longpress here.
+[http://react-long.surge.sh]()
 
-[build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
-[build]: https://travis-ci.org/user/repo
+# Example
 
-[npm-badge]: https://img.shields.io/npm/v/npm-package.png?style=flat-square
-[npm]: https://www.npmjs.org/package/npm-package
-
-[coveralls-badge]: https://img.shields.io/coveralls/user/repo/master.png?style=flat-square
-[coveralls]: https://coveralls.io/github/user/repo
+```js
+<div>
+  <LongPress
+    time={1000}
+    onLongPress={() => alert('pressed for 1s')}
+    onPress={() => alert('pressed')}
+  >
+    <div>
+      Hello world
+    </div>
+  </LongPress>
+</div>
+```

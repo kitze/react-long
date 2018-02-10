@@ -1,7 +1,7 @@
 {
-  "name": "react-longpress",
+  "name": "react-long",
   "version": "1.0.0",
-  "description": "react-longpress React component",
+  "description": "A LongPress React component",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "nwb": "0.21.x",
+    "prettier": "^1.10.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
