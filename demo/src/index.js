@@ -36,12 +36,16 @@ class Demo extends Component {
 
     return (
       <div>
-        <h1 style={{textAlign: 'center'}}>react-long Demo</h1>
+        <div style={{textAlign: 'center'}}>
+          <h1>react-long Demo</h1>
+          <h3>(works only on mobile)</h3>
+        </div>
+
         <div>
           {Array.from({length: 10}).map((t, i) => (
             <LongPress
               key={i}
-              time={1000}
+              time={500}
               onLongPress={() => this.addToPressed(i)}
               onPress={() => this.removeFromPressed(i)}
             >

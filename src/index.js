@@ -4,11 +4,24 @@ class LongPress extends Component {
   shouldShortPress = true;
   moved = false;
 
-  static defaultProps = {
-    time: 500,
-    mobileOnly: false,
-    desktopOnly: false
+  state = {
+    touch: true
   };
+
+  static defaultProps = {
+    time: 500
+  };
+
+  componentDidMount() {
+    try {
+      document.createEvent('TouchEvent');
+    } catch (e) {
+      console.error(
+        'The LongPress component can be used only with touch devices.'
+      );
+      this.setState({touch: false});
+    }
+  }
 
   startTimeout = () => {
     this.timeout = setTimeout(this.longPressed, this.props.time);
@@ -41,21 +54,19 @@ class LongPress extends Component {
   };
 
   render() {
-    const {children, disabled, mobileOnly, desktopOnly} = this.props;
+    const {children, disabled} = this.props;
+    const {touch} = this.state;
+
+    if (!touch || disabled) {
+      return children;
+    }
 
     const props = {
       ref: this.setRef,
       onContextMenu: e => e.preventDefault(),
-      ...(!desktopOnly && {
-        onTouchStart: this.onTouchStart,
-        onTouchEnd: this.cancelTimeout,
-        onTouchMove: this.onMove
-      }),
-      ...(!mobileOnly && {
-        onMouseDown: this.onTouchStart,
-        onMouseUp: this.cancelTimeout,
-        onMouseMove: this.onMove
-      }),
+      onTouchStart: this.onTouchStart,
+      onTouchEnd: this.cancelTimeout,
+      onTouchMove: this.onMove,
       style: {
         ...children.props.style,
         WebkitUserSelect: 'none',
@@ -63,10 +74,7 @@ class LongPress extends Component {
       }
     };
 
-    return React.cloneElement(
-      children,
-      disabled ? children.props : {...children.props, ...props}
-    );
+    return React.cloneElement(children, {...children.props, ...props});
   }
 }
 
