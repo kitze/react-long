@@ -7,6 +7,9 @@ import LongPress from '../../src';
 
 const styles = {
   block: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: 300,
     height: 150,
     backgroundColor: '#ffc1c1',
