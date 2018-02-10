@@ -50,7 +50,10 @@ class LongPress extends Component {
       }
     };
 
-    return React.cloneElement(children, disabled ? children.props: {...children.props, ...props});
+    return React.cloneElement(
+      children,
+      disabled ? children.props : {...children.props, ...props}
+    );
   }
 }
 
