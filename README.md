@@ -1,4 +1,5 @@
 # react-long
+Warning: works only on devices that support touch.
 
 # Demo
 
