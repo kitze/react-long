@@ -16,9 +16,7 @@ class LongPress extends Component {
     try {
       document.createEvent('TouchEvent');
     } catch (e) {
-      console.error(
-        'The LongPress component can be used only with touch devices.'
-      );
+      // touch is not available, disable handlers
       this.setState({touch: false});
     }
   }
@@ -44,21 +42,30 @@ class LongPress extends Component {
 
   setRef = ref => (this.ref = ref);
 
-  onTouchStart = () => {
+  onTouchStart = e => {
     this.shouldShortPress = true;
     this.moved = false;
     this.startTimeout();
+    if (typeof this.props.onTouchStart === 'function') {
+      this.props.onTouchStart(e);
+    }
   };
 
-  onTouchEnd = () => {
+  onTouchEnd = e => {
     this.cancelTimeout();
     if (this.props.onPress && this.shouldShortPress && this.moved === false) {
       this.props.onPress();
     }
+    if (typeof this.props.onTouchEnd === 'function') {
+      this.props.onTouchEnd(e);
+    }
   };
 
-  onMove = () => {
+  onMove = e => {
     this.moved = true;
+    if (typeof this.props.onTouchMove === 'function') {
+      this.props.onTouchMove(e);
+    }
   };
 
   render() {
