@@ -23,6 +23,10 @@ class LongPress extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.cancelTimeout();
+  }
+
   startTimeout = () => {
     this.timeout = setTimeout(this.longPressed, this.props.time);
   };
@@ -36,9 +40,6 @@ class LongPress extends Component {
 
   cancelTimeout = () => {
     clearTimeout(this.timeout);
-    if (this.props.onPress && this.shouldShortPress && this.moved === false) {
-      this.props.onPress();
-    }
   };
 
   setRef = ref => (this.ref = ref);
@@ -47,6 +48,13 @@ class LongPress extends Component {
     this.shouldShortPress = true;
     this.moved = false;
     this.startTimeout();
+  };
+
+  onTouchEnd = () => {
+    this.cancelTimeout();
+    if (this.props.onPress && this.shouldShortPress && this.moved === false) {
+      this.props.onPress();
+    }
   };
 
   onMove = () => {
@@ -65,7 +73,7 @@ class LongPress extends Component {
       ref: this.setRef,
       onContextMenu: e => e.preventDefault(),
       onTouchStart: this.onTouchStart,
-      onTouchEnd: this.cancelTimeout,
+      onTouchEnd: this.onTouchEnd,
       onTouchMove: this.onMove,
       style: {
         ...children.props.style,
