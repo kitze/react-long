@@ -40,8 +40,6 @@ class LongPress extends Component {
     clearTimeout(this.timeout);
   };
 
-  setRef = ref => (this.ref = ref);
-
   onTouchStart = e => {
     this.shouldShortPress = true;
     this.moved = false;
@@ -77,7 +75,6 @@ class LongPress extends Component {
     }
 
     const props = {
-      ref: this.setRef,
       onContextMenu: e => e.preventDefault(),
       onTouchStart: this.onTouchStart,
       onTouchEnd: this.onTouchEnd,
