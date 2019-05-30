@@ -59,6 +59,13 @@ class LongPress extends Component {
     }
   };
 
+  onTouchCancel = e => {
+    this.cancelTimeout();
+    if (typeof this.props.onTouchCancel === 'function') {
+      this.props.onTouchCancel(e);
+    }
+  };
+
   onMove = e => {
     this.moved = true;
     if (typeof this.props.onTouchMove === 'function') {
@@ -79,6 +86,7 @@ class LongPress extends Component {
       onTouchStart: this.onTouchStart,
       onTouchEnd: this.onTouchEnd,
       onTouchMove: this.onMove,
+      onTouchCancel: this.onTouchCancel,
       style: {
         ...children.props.style,
         WebkitUserSelect: 'none',
